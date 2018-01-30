@@ -181,18 +181,12 @@ var define;
 
                 needMap[dep] = true;
 
-                if (dep in factoryMap) {
-                    // check whether loaded resource's deps is loaded or not
-                    child = resMap[dep] || resMap[dep + '.js'];
-                    if (child && 'deps' in child) {
-                        findNeed(child.deps);
-                    }
-                    continue;
+                if (!(dep in factoryMap)) {
+                    needLoad.push(dep);
+                    needNum++;
                 }
 
-                needLoad.push(dep);
-                needNum++;
-
+                // check whether loaded resource's deps is loaded or not
                 child = resMap[dep] || resMap[dep + '.js'];
                 if (child && 'deps' in child) {
                     findNeed(child.deps);
